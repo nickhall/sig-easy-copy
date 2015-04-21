@@ -3,8 +3,9 @@
 // @author      Nick Hall
 // @namespace   http://soitgo.es
 // @include     https://soitgo.es/
+// @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.0.1
+// @version     1.0.2
 // ==/UserScript==
 $(document).ready(function()
 {
