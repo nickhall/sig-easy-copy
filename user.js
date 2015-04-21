@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.1.2
+// @version     1.1.3
 // ==/UserScript==
 $(document).ready(function()
 {
@@ -45,6 +45,7 @@ var easycopy = {
 						{
 							$(this).append(' <span class="easycopy"><a href="#" class="ezc-links">x</a> <a href="#" class="ezc-thumbs">+</a></span>');
 							$(this).find('.ezc-links').click(easycopy.handleClick);
+							$(this).find('.ezc-thumbs').click(easycopy.thumbsClick);
 						});
 				}
 			});
