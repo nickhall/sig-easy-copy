@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.1.3
+// @version     1.1.4
 // ==/UserScript==
 $(document).ready(function()
 {
@@ -149,6 +149,8 @@ var easycopy = {
 	populateURLBox: function(data)
 	{
 		var linkData = "";
+		var password = $(data).find('#password').text();
+		linkData += $(data).find('#title').text() + ' [password: ' + password + ']\n';
 		$(data).find('#links_mega a').each(function() { linkData += $(this).attr('href') + '\n' });
 		$('#easycopytext').val($('#easycopytext').val() + linkData);
 		easycopy.dequeue();
