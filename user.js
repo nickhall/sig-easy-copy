@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        sig easy copy
-// @author	Nick Hall
+// @author      Nick Hall
 // @namespace   http://soitgo.es
 // @include     https://soitgo.es/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
@@ -16,7 +16,7 @@ var easycopy = {
 	{
 		$('#links .date').append('<span class="easycopy"><a href="#">x</a></span>');
 		$('.easycopy a').click(easycopy.handleClick);
-		$('#links').before('<textarea id="easycopytext" style="width: 100%;">Click the x to the right of each link to get started.\n</textarea><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
+		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;">Click the x to the right of each link to get started.\n</textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
 		$('#ezc-loading').hide();
 		$('#easycopytext').focus(function() {$(this).select();});
 
@@ -48,6 +48,22 @@ var easycopy = {
 		observer.observe(document, {
 			subtree: true,
 			childList: true
+		});
+
+		// Set up moving the text area on scroll
+		var textareaInitialPosition = $('#easycopytext').offset().top - 10;
+		$(window).scroll(function()
+		{
+			if ($(window).scrollTop() > textareaInitialPosition)
+			{
+				$('#easycopytext').css('position', 'fixed');
+				$('#easycopytext').css('top', '10px');
+			}
+			else
+			{
+				$('#easycopytext').css('position', '');
+				$('#easycopytext').css('top', '');
+			}
 		});
 	},
 
