@@ -15,9 +15,10 @@ $(document).ready(function()
 var easycopy = {
 	init: function()
 	{
-		$('#links .date').append('<span class="easycopy"><a href="#">x</a></span>');
-		$('.easycopy a').click(easycopy.handleClick);
+		$('#links .date').append('<span class="easycopy"><a href="#" class="ezc-links">x</a> <a href="#" class="ezc-thumbs">+</a></span>');
+		$('.easycopy a.ezc-links').click(easycopy.handleClick);
 		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;">Click the x to the right of each link to get started.\n</textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
+		$('.easycopy a.ezc-thumbs').click(easycopy.thumbsClick);
 		$('#ezc-loading').hide();
 		$('#easycopytext').focus(function() {$(this).select();});
 
@@ -29,6 +30,10 @@ var easycopy = {
 			window.scrollTo(0, 0);
 		});
 
+		// Another div for status messages
+		$('body').append('<div id="ezc-status" style="position: fixed; right: 5px; top: 5px; background-color: #191919 !important;">This should never be seen</div>');
+		$('#ezc-status').hide();
+
 		MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 		var observer = new MutationObserver(function(mutations)
 		{
@@ -38,8 +43,8 @@ var easycopy = {
 				{
 					$(mutation.addedNodes).find('.date').each(function()
 						{
-							$(this).append(' <span class="easycopy"><a href="#">x</a></span>');
-							$(this).find('a').click(easycopy.handleClick);
+							$(this).append(' <span class="easycopy"><a href="#" class="ezc-links">x</a> <a href="#" class="ezc-thumbs">+</a></span>');
+							$(this).find('.ezc-links').click(easycopy.handleClick);
 						});
 				}
 			});
@@ -66,6 +71,19 @@ var easycopy = {
 				$('#easycopytext').css('top', '');
 			}
 		});
+
+		// Throw in some custom CSS for voting links
+		$('head').append('<style type="text/css">\
+			.ezc-flood {\
+				color: yellow !important;\
+			}\
+			.ezc-voted {\
+				color: green !important;\
+			}\
+			.ezc-alreadyvoted {\
+				color: red !important;\
+			}\
+			</style>');
 	},
 
 	handleClick: function(event)
@@ -76,6 +94,45 @@ var easycopy = {
 		easycopy.enqueue();
 		$.get(url, easycopy.populateURLBox);
 		$(this).remove();
+	},
+
+	thumbsClick: function(event)
+	{
+		event.preventDefault();
+		var linkID = $(this).parent().parent().prev().find('.title').parent().attr('href').split(':');
+		var currentLink = $(this);
+		if (currentLink.hasClass('ezc-alreadyvoted') || currentLink.hasClass('ezc-voted'))
+		{
+			easycopy.displayMessage("Already voted");
+			return; // Don't pester the server if we've already voted
+		}
+		$.ajax('ajax.php?i=link&thank=' + linkID[1]).done(function (msg)
+			{
+				currentLink.removeClass('ezc-flood');
+				currentLink.removeClass('ezc-voted');
+				currentLink.removeClass('ezc-alreadyvoted');
+				if (msg == 'flood')
+				{
+					currentLink.addClass('ezc-flood');
+					easycopy.displayMessage("Please wait");
+					console.log("FLOOD!!!");
+				}
+				else if (msg)
+				{
+					easycopy.displayMessage("Vote successful");
+					currentLink.addClass('ezc-voted');
+					console.log("VOTED");
+				} 
+				else
+				{
+					easycopy.displayMessage("Already voted");
+					currentLink.addClass('ezc-alreadyvoted');
+					console.log("Already voted");
+				}
+
+				$(this).css('color', 'red');
+			}
+			);
 	},
 
 	populateURLBox: function(data)
@@ -96,6 +153,7 @@ var easycopy = {
 		$('#easycopytext').css('user-select', 'none');
 		$('#ezc-loading').show('fast');
 	},
+
 	dequeue: function()
 	{
 		easycopy.loadingCount--;
@@ -105,5 +163,11 @@ var easycopy = {
 			$('#easycopytext').css('user-select', 'all');
 			$('#ezc-loading').hide('slow');
 		}
+	},
+
+	displayMessage: function(message)
+	{
+		$('#ezc-status').text(message);
+		$('#ezc-status').show('fast').delay(3000).fadeOut();
 	}
 }
