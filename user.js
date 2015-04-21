@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        sig easy copy
-// @author		Nick Hall
+// @author	Nick Hall
 // @namespace   http://soitgo.es
 // @include     https://soitgo.es/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
