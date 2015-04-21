@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.1.1
+// @version     1.1.2
 // ==/UserScript==
 $(document).ready(function()
 {
@@ -31,7 +31,7 @@ var easycopy = {
 		});
 
 		// Another div for status messages
-		$('body').append('<div id="ezc-status" style="position: fixed; right: 5px; top: 5px; background-color: #191919 !important;">This should never be seen</div>');
+		$('body').append('<div id="ezc-status" style="position: fixed; right: 5px; top: 5px; background-color: #191919 !important; color: white !important; padding: 5px !important;">This should never be seen</div>');
 		$('#ezc-status').hide();
 
 		MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
@@ -75,13 +75,16 @@ var easycopy = {
 		// Throw in some custom CSS for voting links
 		$('head').append('<style type="text/css">\
 			.ezc-flood {\
-				color: yellow !important;\
+				color: orange !important;\
 			}\
 			.ezc-voted {\
 				color: green !important;\
 			}\
 			.ezc-alreadyvoted {\
 				color: red !important;\
+			}\
+			.easycopy button {\
+				margin: 0 !important;\
 			}\
 			</style>');
 
@@ -113,6 +116,7 @@ var easycopy = {
 			easycopy.displayMessage("Already voted");
 			return; // Don't pester the server if we've already voted
 		}
+		easycopy.enqueue('vote');
 		$.ajax('ajax.php?i=link&thank=' + linkID[1]).done(function (msg)
 			{
 				currentLink.removeClass('ezc-flood');
@@ -136,8 +140,7 @@ var easycopy = {
 					currentLink.addClass('ezc-alreadyvoted');
 					console.log("Already voted");
 				}
-
-				$(this).css('color', 'red');
+				easycopy.dequeue();
 			}
 			);
 	},
@@ -152,22 +155,27 @@ var easycopy = {
 
 	loadingCount: 0,
 
-	enqueue: function()
+	enqueue: function(type)
 	{
 		easycopy.loadingCount++;
-		console.log("Current queued: " + easycopy.loadingCount);
-		$('#easycopytext').prop('disabled', true);
-		$('#easycopytext').css('user-select', 'none');
+		if (type !== 'vote')
+		{
+			$('#easycopytext').prop('disabled', true);
+			$('#easycopytext').css('user-select', 'none');
+		}
 		$('#ezc-loading').show('fast');
 	},
 
-	dequeue: function()
+	dequeue: function(type)
 	{
 		easycopy.loadingCount--;
 		if (easycopy.loadingCount === 0)
 		{
-			$('#easycopytext').prop('disabled', false);
-			$('#easycopytext').css('user-select', 'all');
+			if (type !== 'vote')
+			{
+				$('#easycopytext').prop('disabled', false);
+				$('#easycopytext').css('user-select', 'all');
+			}
 			$('#ezc-loading').hide('slow');
 		}
 	},
