@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.1.0
+// @version     1.1.1
 // ==/UserScript==
 $(document).ready(function()
 {
