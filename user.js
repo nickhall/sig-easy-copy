@@ -84,6 +84,13 @@ var easycopy = {
 				color: red !important;\
 			}\
 			</style>');
+
+		// Show/hide the link box if we want
+		$('#middlebar a:last').after('<button id="ezc-linkToggle">Link Box</button>');
+		$('#ezc-linkToggle').click(function(e)
+		{
+			$('#ezc-textcontainer').toggle('fast');
+		});
 	},
 
 	handleClick: function(event)
