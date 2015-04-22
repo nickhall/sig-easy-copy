@@ -151,7 +151,7 @@ var easycopy = {
 		var linkData = "";
 		var password = $(data).find('#password').text();
 		linkData += $(data).find('#title').text() + ' [password: ' + password + ']\n';
-		$(data).find('#links_mega a').each(function() { linkData += $(this).attr('href') + '\n' });
+		$(data).find('#links_mega a').each(function() { linkData += $(this).attr('href') + '\n\n' });
 		$('#easycopytext').val($('#easycopytext').val() + linkData);
 		easycopy.dequeue();
 	},
