@@ -234,6 +234,5 @@ var easycopy = {
 	{
 		GM_setValue('run', true);
 		GM_setValue('showLinkBox', true);
-		alert('First time');
 	}
 }
