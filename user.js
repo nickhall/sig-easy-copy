@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.2.0
+// @version     1.2.1
 // ==/UserScript==
 $(document).ready(function()
 {
@@ -19,7 +19,6 @@ var easycopy = {
 	init: function()
 	{
 		easycopy.loadSettings();
-		if (easycopy.settings['run'] !== true) easycopy.runFirstTime(); // Run first time only
 		console.log(easycopy.settings);
 
 		// Add x and + links
@@ -224,6 +223,11 @@ var easycopy = {
 	loadSettings: function()
 	{
 		var settings = GM_listValues();
+		if (settings.length === 0)
+		{
+			easycopy.runFirstTime(); // Run if we haven't saved anything yet
+			settings = GM_listValues(); // Reload
+		}
 		for (var i = 0; i < settings.length; i++)
 		{
 			easycopy.settings[settings[i]] = GM_getValue(settings[i]);
@@ -233,7 +237,6 @@ var easycopy = {
 	runFirstTime: function()
 	{
 		console.log('Running initial setup...')
-		GM_setValue('run', true);
 		console.log('Defaulting link box display to true');
 		GM_setValue('showLinkBox', true);
 	}
