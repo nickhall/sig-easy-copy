@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.2.1
+// @version     1.2.2
 // ==/UserScript==
 $(document).ready(function()
 {
@@ -48,7 +48,7 @@ var easycopy = {
 							</div>');
 		$('#ezc-settings-div').hide();
 		$('#ezc-settings-save').click(easycopy.saveSettings);
-		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open">Settings</a>');
+		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAn9JREFUOE+NVUtrE1EUvrpRf4KoWBUVF8WduOhWUFwILXWvoLsssik0WQRCIC8j5h2STBIT8zAdSJPJO9mIuKrQhX9BTHwh4rsg43eae2Q6nVQ/OMyde8/3zXnce0ccBIfDcbxSqTzrdDqvYW9qtdoLp9N5Wi7/H3w+36IcikAgcH04HOpkg8FAH41GejAYXJbLwuv1XpZDaySTyfVer/crk8kkC4VCvt1uf+n3+7rREOnX0uPSE/g86na7O+l02i3pe3AoHA6vUwQcCY/Ngub18Xisx2IxD2nMpAC3273IzlZkTtvqI/RO5vF4rkg5IVwu19FsNpsgAjuSgKZpn5F6NpVK3Uc57uXz+VSr2fpo9KNxTskV7Xb7MSk3QyFfUNiRnqqqvjI2iOH3+y+qG+pLo2+xWNyQy0JgG5wC8RqK/Z3DRzM+oQyXpMs+gHNGa2rvufvg/oTGDWS6IGif8QJ/UVGUjOTOBbr7gBpCHOKSRv1pfUtAfcJiLJhIJO5K3lxEo9EVEmGejPQtCU7NgvF4/I7kzUUkElm2EHwn6DhxgVkwl8slJW8ukLLXzEOztqnA53DEblFh6StkWkv7QPOSuw8o/slGozExNGUnFAqtYP6C0IXQ5xm2yHmp8Rc4vwvVavU5R0fPUqm0KZfBYoGlJR0eewQpUnQ8hKN1G41axeb3tzZbU3OqmM/abLYj/xSkdIhAqZHRmOZYjIzLhKN3dSa4tqZbQgoaySxAwixOexHRP0T9Ds8EZTRWEeJ6+mYWxNyPcrncRCkUvP+mkuwKMQ4SxGV6k1Mio7TRzVVJpct4lqYRRgGz4RdwQq2rW4hqApviwthGamcl1QJC/AFaiwPj1xtC0gAAAABJRU5ErkJggg==" style="height: 20px; width: 20px; margin-bottom: 5px;" /></a>');
 		$('.ezc-settings-open').click(function(e) {e.preventDefault(); $('#ezc-settings-div').toggle('fast');});
 		if(easycopy.settings['showLinkBox']) $('#ezc-settings-linkbox').prop('checked', true);
 
