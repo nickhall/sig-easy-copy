@@ -232,7 +232,9 @@ var easycopy = {
 
 	runFirstTime: function()
 	{
+		console.log('Running initial setup...')
 		GM_setValue('run', true);
+		console.log('Defaulting link box display to true');
 		GM_setValue('showLinkBox', true);
 	}
 }
