@@ -5,20 +5,30 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.1.4
+// @version     1.2.0
 // ==/UserScript==
 $(document).ready(function()
 {
-	easycopy.init();
+	if ($('#login').length === 0)
+	{
+		easycopy.init();
+	}
 });
 
 var easycopy = {
 	init: function()
 	{
+		easycopy.loadSettings();
+		if (easycopy.settings['run'] !== true) easycopy.runFirstTime(); // Run first time only
+		console.log(easycopy.settings);
+
+		// Add x and + links
 		$('#links .date').append('<span class="easycopy"><a href="#" class="ezc-links">x</a> <a href="#" class="ezc-thumbs">+</a></span>');
 		$('.easycopy a.ezc-links').click(easycopy.handleClick);
-		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;">Click the x to the right of each link to get started.\n</textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
 		$('.easycopy a.ezc-thumbs').click(easycopy.thumbsClick);
+
+		// Link box, loading box
+		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;">Click the x to the right of each link to get started.\n</textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
 		$('#ezc-loading').hide();
 		$('#easycopytext').focus(function() {$(this).select();});
 
@@ -29,6 +39,19 @@ var easycopy = {
 			e.preventDefault();
 			window.scrollTo(0, 0);
 		});
+
+		// Settings page
+		$('body').append('<div id="ezc-settings-div" style="position: fixed; width: 800px; max-height: 500px; top: 50%; left: 50%; margin-left: -400px; margin-top: -250px; background-color: ' + $('body').css('background-color') + '; border: 2px solid ' + $('body').css('color') + '; border-radius: 10px; padding: 10px;">\
+							<h2>Settings</h2>\
+							<p><label>Show link box by default <input type="checkbox" id="ezc-settings-linkbox" /></label></p>\
+							<button id="ezc-settings-save">Save</button>\
+							<p><a href="#" class="ezc-settings-open">Close</a></p>\
+							</div>');
+		$('#ezc-settings-div').hide();
+		$('#ezc-settings-save').click(easycopy.saveSettings);
+		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open">Settings</a>');
+		$('.ezc-settings-open').click(function(e) {e.preventDefault(); $('#ezc-settings-div').toggle('fast');});
+		if(easycopy.settings['showLinkBox']) $('#ezc-settings-linkbox').prop('checked', true);
 
 		// Another div for status messages
 		$('body').append('<div id="ezc-status" style="position: fixed; right: 5px; top: 5px; background-color: #191919 !important; color: white !important; padding: 5px !important;">This should never be seen</div>');
@@ -73,7 +96,7 @@ var easycopy = {
 			}
 		});
 
-		// Throw in some custom CSS for voting links
+		// Throw in some custom inline CSS for voting links (since we need to use !important)
 		$('head').append('<style type="text/css">\
 			.ezc-flood {\
 				color: orange !important;\
@@ -90,11 +113,12 @@ var easycopy = {
 			</style>');
 
 		// Show/hide the link box if we want
-		$('#middlebar a:last').after('<button id="ezc-linkToggle">Link Box</button>');
+		$('#middlebar > a:nth-child(4)').after('<button id="ezc-linkToggle">Link Box</button>');
 		$('#ezc-linkToggle').click(function(e)
 		{
 			$('#ezc-textcontainer').toggle('fast');
 		});
+		if (!easycopy.settings['showLinkBox']) $('#ezc-textcontainer').hide();
 	},
 
 	handleClick: function(event)
@@ -187,5 +211,29 @@ var easycopy = {
 	{
 		$('#ezc-status').text(message);
 		$('#ezc-status').show('fast').delay(3000).fadeOut();
+	},
+
+	settings: [],
+
+	saveSettings: function()
+	{
+		GM_setValue('showLinkBox', $('#ezc-settings-linkbox').is(':checked'));
+		easycopy.displayMessage("Settings saved");
+	},
+
+	loadSettings: function()
+	{
+		var settings = GM_listValues();
+		for (var i = 0; i < settings.length; i++)
+		{
+			easycopy.settings[settings[i]] = GM_getValue(settings[i]);
+		};
+	},
+
+	runFirstTime: function()
+	{
+		GM_setValue('run', true);
+		GM_setValue('showLinkBox', true);
+		alert('First time');
 	}
 }
