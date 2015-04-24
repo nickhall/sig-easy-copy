@@ -40,6 +40,7 @@ var easycopy = {
 		});
 
 		// Settings page
+		var settingsIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAJ2SURBVDhPjVVJixNBFC69qD9BVBwVFQ+DN/EPCIoHYYbxrqC3HHKc5BAIgWxGzB6ym5iNNGTS2ZeLiKcR5uBfEBM3RNwHpP2eqeeUPR31g0dXV73vq7dUdYu/weFwHK1Wq497vd6Lbrf7sl6vP3U6nSfl8v/B5/OtyqEIBAJXx+OxQTYajYzJZGIEg8E1uSy8Xu9FObRGMpncHAwG3zOZTLJYLBYQ1cfhcGiohrlP5YflR/B5gMh30+m0W9L/wIFwOLxJEXAkPDYLmten06kRi8U8pLGQAtxu9yo7W5E5batN6J3M4/FcknJCuFyuw9lsNkEEdiQBXdc/IPVsKpW6i3LcKRQKqXa7/U71o3EulyvZ7fYjUm6BYqGYY0d6NpvN52qDGH6//7zW1J6pvqVSqSmXhcAxOAHiFRT4C4ePwr9HGS5Il30A51Rnq/OGuw//b9C4hkxXBJ0zXuAdkX5GcpcC3b1HDSEOcUmj0WhsC0Q2YzEWTCQStyVvKaLR6DqJME9G+ooE52bBeDx+S/KWIhKJrFkIvhZ0nbjALJjP55OStxRI2WvmoVk7VOAzuGI3qLC0C1lH77ylecndBxT/eKvVmilN2Q2FQuuYPycMIYxlhiNyVmr8Bu7vSq1We8LR0bNcLm/JZbBUEYLyTpHi0IZwtW6iURvovl9v6XNzqrjXWZvNduifgpQOESg1MhrTHIuRcZlw9S7vCVpBCqpkFiBhFqeziOjvo34H9wTZpBBbv9//bBbEMftaqVTaKEUO7z+oJL+EGKqAWRAf0+ucEhmljW5uSCp9jBdpqlAFzIZfwDGtoW0j0hlsrmnaDlI7LakWEOIn6cMDH2scnnQAAAAASUVORK5CYII=';
 		$('body').append('<div id="ezc-settings-div" style="position: fixed; width: 800px; max-height: 500px; top: 50%; left: 50%; margin-left: -400px; margin-top: -250px; background-color: ' + $('body').css('background-color') + '; border: 2px solid ' + $('body').css('color') + '; border-radius: 10px; padding: 10px;">\
 							<h2>Settings</h2>\
 							<p><label>Show link box by default <input type="checkbox" id="ezc-settings-linkbox" /></label></p>\
@@ -48,7 +49,7 @@ var easycopy = {
 							</div>');
 		$('#ezc-settings-div').hide();
 		$('#ezc-settings-save').click(easycopy.saveSettings);
-		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAn9JREFUOE+NVUtrE1EUvrpRf4KoWBUVF8WduOhWUFwILXWvoLsssik0WQRCIC8j5h2STBIT8zAdSJPJO9mIuKrQhX9BTHwh4rsg43eae2Q6nVQ/OMyde8/3zXnce0ccBIfDcbxSqTzrdDqvYW9qtdoLp9N5Wi7/H3w+36IcikAgcH04HOpkg8FAH41GejAYXJbLwuv1XpZDaySTyfVer/crk8kkC4VCvt1uf+n3+7rREOnX0uPSE/g86na7O+l02i3pe3AoHA6vUwQcCY/Ngub18Xisx2IxD2nMpAC3273IzlZkTtvqI/RO5vF4rkg5IVwu19FsNpsgAjuSgKZpn5F6NpVK3Uc57uXz+VSr2fpo9KNxTskV7Xb7MSk3QyFfUNiRnqqqvjI2iOH3+y+qG+pLo2+xWNyQy0JgG5wC8RqK/Z3DRzM+oQyXpMs+gHNGa2rvufvg/oTGDWS6IGif8QJ/UVGUjOTOBbr7gBpCHOKSRv1pfUtAfcJiLJhIJO5K3lxEo9EVEmGejPQtCU7NgvF4/I7kzUUkElm2EHwn6DhxgVkwl8slJW8ukLLXzEOztqnA53DEblFh6StkWkv7QPOSuw8o/slGozExNGUnFAqtYP6C0IXQ5xm2yHmp8Rc4vwvVavU5R0fPUqm0KZfBYoGlJR0eewQpUnQ8hKN1G41axeb3tzZbU3OqmM/abLYj/xSkdIhAqZHRmOZYjIzLhKN3dSa4tqZbQgoaySxAwixOexHRP0T9Ds8EZTRWEeJ6+mYWxNyPcrncRCkUvP+mkuwKMQ4SxGV6k1Mio7TRzVVJpct4lqYRRgGz4RdwQq2rW4hqApviwthGamcl1QJC/AFaiwPj1xtC0gAAAABJRU5ErkJggg==" style="height: 20px; width: 20px; margin-bottom: 5px;" /></a>');
+		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open"><img src="' + settingsIcon + '" style="height: 20px; width: 20px; margin-bottom: 5px;" /></a>');
 		$('.ezc-settings-open').click(function(e) {e.preventDefault(); $('#ezc-settings-div').toggle('fast');});
 		if(easycopy.settings['showLinkBox']) $('#ezc-settings-linkbox').prop('checked', true);
 
