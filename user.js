@@ -5,7 +5,10 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.2.2
+// @version     1.2.3
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_listValues
 // ==/UserScript==
 $(document).ready(function()
 {
