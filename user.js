@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.2.3
+// @version     1.2.4
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_listValues
@@ -30,7 +30,7 @@ var easycopy = {
 		$('.easycopy a.ezc-thumbs').click(easycopy.thumbsClick);
 
 		// Link box, loading box
-		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;">Click the x to the right of each link to get started.\n</textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
+		$('#links').before('<div id="ezc-textcontainer" style="height: 100px; clear: both; margin: 0 20px 20px 20px; padding: 0 !important;"><textarea id="easycopytext" style="width: 922px; height: 98px; padding: 0 !important; margin: 0 !important;" placeholder="Click the x to the right of each link to get started."></textarea></div><div id="ezc-loading" style="position: fixed; bottom: 0; right: 0;">Loading...</div>');
 		$('#ezc-loading').hide();
 		$('#easycopytext').focus(function() {$(this).select();});
 
