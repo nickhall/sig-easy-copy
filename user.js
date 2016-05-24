@@ -5,7 +5,7 @@
 // @include     https://soitgo.es/
 // @include     https://soitgo.es/?*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version     1.2.4
+// @version     1.2.5
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_listValues
