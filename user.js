@@ -54,7 +54,7 @@ var easycopy = {
 		$('#ezc-settings-save').click(easycopy.saveSettings);
 		$('nav .ten.columns.omega').append('<a href="#" class="ezc-settings-open"><img src="' + settingsIcon + '" style="height: 20px; width: 20px; margin-bottom: 5px;" /></a>');
 		$('.ezc-settings-open').click(function(e) {e.preventDefault(); $('#ezc-settings-div').toggle('fast');});
-		if(easycopy.settings['showLinkBox']) $('#ezc-settings-linkbox').prop('checked', true);
+		if(easycopy.settings.showLinkBox) $('#ezc-settings-linkbox').prop('checked', true);
 
 		// Another div for status messages
 		$('body').append('<div id="ezc-status" style="position: fixed; right: 5px; top: 5px; background-color: #191919 !important; color: white !important; padding: 5px !important;">This should never be seen</div>');
@@ -121,7 +121,7 @@ var easycopy = {
 		{
 			$('#ezc-textcontainer').toggle('fast');
 		});
-		if (!easycopy.settings['showLinkBox']) $('#ezc-textcontainer').hide();
+		if (!easycopy.settings.showLinkBox) $('#ezc-textcontainer').hide();
 	},
 
 	handleClick: function(event)
@@ -178,7 +178,7 @@ var easycopy = {
 		var linkData = "";
 		var password = $(data).find('#password').text();
 		linkData += $(data).find('#title').text() + ' [password: ' + password + ']\n';
-		$(data).find('#links_mega a').each(function() { linkData += $(this).attr('href') + '\n\n' });
+		$(data).find('#links_mega a').each(function() { linkData += $(this).attr('href') + '\n\n'; });
 		$('#easycopytext').val($('#easycopytext').val() + linkData);
 		easycopy.dequeue();
 	},
@@ -235,13 +235,13 @@ var easycopy = {
 		for (var i = 0; i < settings.length; i++)
 		{
 			easycopy.settings[settings[i]] = GM_getValue(settings[i]);
-		};
+		}
 	},
 
 	runFirstTime: function()
 	{
-		console.log('Running initial setup...')
+		console.log('Running initial setup...');
 		console.log('Defaulting link box display to true');
 		GM_setValue('showLinkBox', true);
 	}
-}
+};
